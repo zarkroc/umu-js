@@ -7,6 +7,8 @@ var lecture;
 var seminar;
 var discussion;
 var messageage;
+var pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+
 
 
 window.onload = function() {
@@ -24,12 +26,23 @@ function validateForm(event) {
     lastName = registrationForm.field_lastname.value;
     email = registrationForm.field_email.value;
     organization = registrationForm.field_organisation.value;
-    console.log(firstName);
-    console.log(lastName);
+    let isValidEmail = pattern.test(email); 
 
-    if (firstName == "" || lastName == "" || email == "" || organization == ""){
-        alert("You need to fill in the fields")
-        registrationForm.field_email.validi
+    if (firstName == ""){
+        alert("You need to fill in the field firstname")
+        event.preventDefault();
+    } else if (lastName == "") {
+        alert("You need to fill in the field lastname")
+        event.preventDefault();
+    } else if (email == "") {
+        alert("You need to fill in the field email")
+        event.preventDefault();
+    } else if (organization == "") {
+        alert("You need to fill in the field organization")
+        event.preventDefault();
+    } else if (!isValidEmail)
+    {
+        alert("Email is not valid");
         event.preventDefault();
     }
     
