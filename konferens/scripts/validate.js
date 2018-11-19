@@ -3,10 +3,9 @@ var firstName;
 var lastName;
 var email;
 var organization;
-var lecture;
-var seminar;
-var discussion;
-var messageage;
+var selectedType;
+var message;
+var title
 var pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
 
 
@@ -26,25 +25,34 @@ function validateForm(event) {
     lastName = registrationForm.field_lastname.value;
     email = registrationForm.field_email.value;
     organization = registrationForm.field_organisation.value;
+    message = registrationForm.field_message.value;
+    title = registrationForm.field_pres_title.value;
+    selectedType = registrationForm.pres_type.value;
     let isValidEmail = pattern.test(email); 
 
-    if (firstName == ""){
-        alert("You need to fill in the field firstname")
+    if (firstName.length === 0){
+        alert("Du måste fylla i ett förnamn")
         event.preventDefault();
-    } else if (lastName == "") {
-        alert("You need to fill in the field lastname")
+        
+    } else if (lastName.length === 0) {
+        alert("Du måste fylla in ett efternamn")
         event.preventDefault();
-    } else if (email == "") {
-        alert("You need to fill in the field email")
+    } else if (email.length === 0) {
+        alert("Du måste fylla in email")
         event.preventDefault();
-    } else if (organization == "") {
-        alert("You need to fill in the field organization")
+    } else if (organization.length === 0) {
+        alert("Du måste fylla i organisation")
         event.preventDefault();
-    } else if (!isValidEmail)
-    {
-        alert("Email is not valid");
+    } else if (!isValidEmail) {
+        alert("Email är inte en giltig email");
         event.preventDefault();
+    } else if (message.length > 200) {
+        alert("Du har skrivit in ett förlångt meddelande");
+        event.preventDefault();
+    } else if (selectedType == "lecture"  || selectedType == "seminar" ) {
+        if (title.length === 0) {
+            alert("Titel måste fyllas i när du valt föreläsning eller semenarium");
+            event.preventDefault();
+        }
     }
-    
-    
 }
