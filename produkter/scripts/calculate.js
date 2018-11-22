@@ -29,3 +29,26 @@ kontrollerar så att din lösning fortfarande fungerar.
 
 var content;
 var pricetable;
+
+window.onload = function () {
+    content = document.getElementById("content");
+    pricetable = document.getElementById("pricetable");
+    addColum();
+ };
+
+ function addColum() {
+    let cell = document.createElement("td");
+    let head = document.createElement("th");
+    let cellText;
+    for (let i = 0; i < pricetable.length; i ++) {
+        if (i === 0) {
+            cellText = document.createTextNode("Summa");
+            head.appendChild(cellText);
+            pricetable[i].appendChild(head);
+        } else {
+            cellText = document.createTextNode("");
+            cell.appendChild(cellText);
+            pricetable[i].appendChild(cell);
+        }
+    }
+ }
