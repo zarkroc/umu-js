@@ -34,21 +34,31 @@ window.onload = function () {
     content = document.getElementById("content");
     pricetable = document.getElementById("pricetable");
     addColum();
+    addRow();
  };
 
  function addColum() {
-    let cell = document.createElement("td");
-    let head = document.createElement("th");
     let cellText;
-    for (let i = 0; i < pricetable.length; i ++) {
+    for (let i = 0; i < pricetable.rows.length; i ++) {
         if (i === 0) {
+            let head = document.createElement("th");
             cellText = document.createTextNode("Summa");
             head.appendChild(cellText);
-            pricetable[i].appendChild(head);
+            pricetable.rows[i].appendChild(head);
         } else {
-            cellText = document.createTextNode("");
-            cell.appendChild(cellText);
-            pricetable[i].appendChild(cell);
+            //let cell = document.createElement("td");
+            //cellText = document.createTextNode("1");
+            //cell.appendChild(cellText);
+            //pricetable.rows[i].appendChild(cell);
+            pricetable.rows[i].insertCell().id = "summa";
         }
     }
+ }
+
+ function addRow() {
+    let lastRow = pricetable.rows.length;
+    var row = pricetable.insertRow(lastRow);
+    row.id = "sumrow"
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
  }
