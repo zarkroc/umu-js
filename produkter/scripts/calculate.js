@@ -29,12 +29,14 @@ kontrollerar så att din lösning fortfarande fungerar.
 
 var content;
 var pricetable;
+var button;
 
 window.onload = function () {
     content = document.getElementById("content");
     pricetable = document.getElementById("pricetable");
     addColum();
     addRow();
+    addButton();
  };
 
  function addColum() {
@@ -46,10 +48,6 @@ window.onload = function () {
             head.appendChild(cellText);
             pricetable.rows[i].appendChild(head);
         } else {
-            //let cell = document.createElement("td");
-            //cellText = document.createTextNode("1");
-            //cell.appendChild(cellText);
-            //pricetable.rows[i].appendChild(cell);
             pricetable.rows[i].insertCell().id = "summa";
         }
     }
@@ -58,7 +56,38 @@ window.onload = function () {
  function addRow() {
     let lastRow = pricetable.rows.length;
     var row = pricetable.insertRow(lastRow);
-    row.id = "sumrow"
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
+    row.id = "sumrow";
+    for (let i = 0; i < pricetable.rows[0].cells.length; i++) {
+        row.insertCell(i);
+    }
+ }
+
+ function addButton() {
+    button = document.createElement("button");
+    button.innerHTML = "Beräkna pris";
+    button.className = "btn btn-primary"
+    document.getElementById("content").appendChild(button);
+    button.addEventListener("click", function(){
+        calculateProducts();
+    }
+    );
+ }
+
+ function calculateProducts() {
+    let rows = pricetable.rows;
+    let totalSum = 0;
+    let numberOfProducts = 0;
+    let lastRow = rows[rows.length -1];
+    // Don't count the header or the sum row
+    for (let i = 1; i < rows.length -1 ; i++)
+    {
+        let row = rows[i];
+        let rowSum = parseInt(row.cells[row.cells.length - 3].innerHTML);
+        let rowCount = parseInt(row.cells[row.cells.length - 2].getElementsByTagName("input")[0].value);
+        row.cells[row.cells.length -1].innerHTML = rowSum * rowCount;
+        totalSum += rowSum;
+        numberOfProducts += rowCount;
+    }
+    lastRow.cells[lastRow.cells.length - 2].innerHTML = numberOfProducts;
+    lastRow.cells[lastRow.cells.length - 1].innerHTML = totalSum;
  }
